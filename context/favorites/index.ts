@@ -65,7 +65,7 @@ export const addProductToFavoriteFx = createEffect(
         return newData
       }
 
-      toast.success('Добавлено в избранное!')
+      toast.success('added to favorites')
       return data
     } catch (error) {
       toast.error((error as Error).message)
@@ -121,7 +121,7 @@ export const deleteFavoriteItemFx = createEffect(
         return newData
       }
 
-      toast.success('Удалено из избранных!')
+      toast.success('deleted from favorites')
       return data
     } catch (error) {
       toast.error((error as Error).message)

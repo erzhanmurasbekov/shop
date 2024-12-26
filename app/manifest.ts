@@ -12,13 +12,13 @@ export default function manifest(): MetadataRoute.Manifest {
     display: 'standalone',
     icons: [
       {
-        src: '/img/icon.svg',
+        src: '/img/icon.png',
         sizes: '196x196 512x512 144x144 192x192 128x128 120x120 180x180',
         type: 'image/svg',
         purpose: 'maskable',
       },
       {
-        src: '/img/logo.svg',
+        src: '/img/logo.png',
         sizes: '196x196 512x512 144x144 192x192 128x128 120x120 180x180',
         type: 'image/png',
         purpose: 'any',

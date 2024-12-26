@@ -27,7 +27,7 @@ export const oauthFx = createEffect(
         email,
       })
 
-      onAuthSuccess('Авторизация выполнена!', data)
+      onAuthSuccess('Logged in', data)
       return data.user
     } catch (error) {
       toast.error((error as Error).message)
@@ -57,7 +57,7 @@ export const singUpFx = createEffect(
       return
     }
 
-    onAuthSuccess('Регистрация прошла успешно!', data)
+    onAuthSuccess('Signed up', data)
 
     return data
   }
@@ -80,7 +80,7 @@ export const singInFx = createEffect(
       return
     }
 
-    onAuthSuccess('Вход выполнен!', data)
+    onAuthSuccess('Logged in', data)
 
     return data
   }

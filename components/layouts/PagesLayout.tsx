@@ -87,7 +87,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {isClient ? (
-        <Auth0Provider clientId='' domain=''>
+        //authoprovider
           <html lang='en'>
             <body>
               <Next13ProgressBar height='4px' color='#9466FF' showOnShallow />
@@ -129,7 +129,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
               <Toaster position='top-center' reverseOrder={false} />
             </body>
           </html>
-        </Auth0Provider>
+        
       ) : (
         <html lang='en'>
           <body>
