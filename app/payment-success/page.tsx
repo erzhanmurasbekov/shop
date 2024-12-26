@@ -32,7 +32,7 @@ export default function Favorites() {
       setPageSpinner(false)
     }
     getPaymentData()
-
+    //eslint-disable-next-line
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function Favorites() {
       }
 
       paymentNotifyFx({ email: user.email, message: description })
-    }
+    }//eslint-disable-next-line
   }, [paymentData.description, user.email, paymentData.metadata]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const getPaymentData = async () => {
