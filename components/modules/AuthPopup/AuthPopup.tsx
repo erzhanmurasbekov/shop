@@ -3,7 +3,7 @@ import AuthPopupRegistration from './AuthPopupRegistration'
 import AuthPopupLogin from './AuthPopupLogin'
 
 const AuthPopup = () => {
-  const [isAuthSwitched, setIsAuthSwitched] = useState(false)
+  const [isAuthSwitched, setIsAuthSwitched] = useState(true)
   const [isSignInActive, setIsSignInActive] = useState(false)
   const [isSignupActive, setIsSignupActive] = useState(true)
 

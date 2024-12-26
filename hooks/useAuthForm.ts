@@ -1,9 +1,9 @@
-import { useEarthoOne } from '@eartho/one-client-react'
 import { EventCallable, Store } from 'effector'
 import { useUnit } from 'effector-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { IInputs, ISignUpFx } from '@/types/authPopup'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export const useAuthForm = (
   initialSpinner: Store<boolean>,
@@ -11,7 +11,7 @@ export const useAuthForm = (
   event: EventCallable<ISignUpFx>
 ) => {
   const spinner = useUnit(initialSpinner)
-  const { isConnected, user, connectWithPopup } = useEarthoOne()
+  const { isAuthenticated, user, loginWithPopup } = useAuth0();
 
   const {
     register,
@@ -21,7 +21,7 @@ export const useAuthForm = (
 
   useEffect(() => {
     if (isSideActive) {
-      if (isConnected) {
+      if (isAuthenticated) {
         event({
           name: user?.displayName as string,
           email: user?.email as string,
@@ -30,12 +30,10 @@ export const useAuthForm = (
         })
       }
     }
-  }, [isConnected])
+  }, [isAuthenticated])
 
   const handleSignupWithOAuth = () =>
-    connectWithPopup({
-      accessId: `${process.env.NEXT_PUBLIC_OAUTH_ACCESS_ID}`,
-    })
+    loginWithPopup()
 
   return {
     spinner,

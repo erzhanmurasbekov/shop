@@ -2,7 +2,7 @@
 import { useUnit } from 'effector-react'
 import { Toaster } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
-import { EarthoOneProvider } from '@eartho/one-client-react'
+import {Auth0Provider} from '@auth0/auth0-react'
 import { Next13ProgressBar } from 'next13-progressbar'
 import { closeQuickViewModal } from '@/context/modals'
 import Layout from './Layout'
@@ -87,10 +87,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {isClient ? (
-        <EarthoOneProvider
-          domain='1717860453864'
-          clientId={`${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`}
-        >
+        <Auth0Provider clientId='' domain=''>
           <html lang='en'>
             <body>
               <Next13ProgressBar height='4px' color='#9466FF' showOnShallow />
@@ -132,7 +129,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
               <Toaster position='top-center' reverseOrder={false} />
             </body>
           </html>
-        </EarthoOneProvider>
+        </Auth0Provider>
       ) : (
         <html lang='en'>
           <body>
