@@ -28,12 +28,12 @@ export default function Favorites() {
 
   useEffect(() => {
     if (!localStorage.getItem('paymentId')) {
-      setPageSpinner(false)
       notFound()
+      setPageSpinner(false)
     }
-
     getPaymentData()
-  }, [])
+
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (paymentData.description && user.email) {
@@ -48,7 +48,7 @@ export default function Favorites() {
 
       paymentNotifyFx({ email: user.email, message: description })
     }
-  }, [paymentData.description, user.email])
+  }, [paymentData.description, user.email, paymentData.metadata]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const getPaymentData = async () => {
     const paymentId = JSON.parse(localStorage.getItem('paymentId') as string)
