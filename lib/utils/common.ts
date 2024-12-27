@@ -269,7 +269,7 @@ export const isValidAvatarImage = (image: File) => {
   }
 
   if (Math.round(image.size / 1024) > 2000) {
-    toast.error('Вес картинки не должен превышать 2 МБ!')
+    toast.error('image size should be less than 2mb')
     return false
   }
 

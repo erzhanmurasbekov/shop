@@ -2,7 +2,7 @@
 import { useUnit } from 'effector-react'
 import { Toaster } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
-import {Auth0Provider} from '@auth0/auth0-react'
+import { Auth0Provider } from '@auth0/auth0-react'
 import { Next13ProgressBar } from 'next13-progressbar'
 import { closeQuickViewModal } from '@/context/modals'
 import Layout from './Layout'
@@ -88,6 +88,10 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       {isClient ? (
         //authoprovider
+        <Auth0Provider
+          clientId={`${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`}
+          domain={`${process.env.NEXT_PUBLIC_OAUTH_DOMAIN_id}`}
+        >
           <html lang='en'>
             <body>
               <Next13ProgressBar height='4px' color='#9466FF' showOnShallow />
@@ -129,7 +133,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
               <Toaster position='top-center' reverseOrder={false} />
             </body>
           </html>
-        
+        </Auth0Provider>
       ) : (
         <html lang='en'>
           <body>

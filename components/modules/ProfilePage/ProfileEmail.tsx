@@ -42,7 +42,7 @@ const ProfileEmail = () => {
   } = useForm<IInputs & { [index: string]: string }>()
   const emailRegister = register(
     'email',
-    emailValidationRules('Неправильный Email!', 'Введите Email')
+    emailValidationRules('incorrect email', 'email')
   )
 
   const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

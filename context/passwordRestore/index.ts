@@ -59,7 +59,7 @@ export const updateUserPasswordFx = passwordRestore.createEffect(
         password,
       })
 
-      toast.success('Пароль успешно изменен!')
+      toast.success('password updated')
       window.location.href = '/'
       return data
     } catch (error) {

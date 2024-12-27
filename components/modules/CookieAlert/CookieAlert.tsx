@@ -16,7 +16,7 @@ const CookieAlert = ({
     } else {
       toast.error(
         // eslint-disable-next-line max-len
-        'Файл cookie не может быть установлен! Пожалуйста, разблокируйте этот сайт с помощью настроек cookie вашего браузера..'
+        'file cookie can not be set, please check your browser settings'
       )
     }
   }

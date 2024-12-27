@@ -70,7 +70,7 @@ export const editUsernameFx = profile.createEffect(
         return result
       }
 
-      toast.success('Имя сохранено!')
+      toast.success('name updated')
       setEdit(false)
       localStorage.setItem('auth', JSON.stringify(data.tokens))
       updateUsername(name)
@@ -178,7 +178,7 @@ export const editUserEmailFx = profile.createEffect(
         return newData
       }
 
-      toast.success('Email сохранен!')
+      toast.success('Email saved!')
       setEdit(false)
       localStorage.setItem('auth', JSON.stringify(result.data.tokens))
       updateUserEmail(email)

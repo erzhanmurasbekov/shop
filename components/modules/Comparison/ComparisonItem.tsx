@@ -91,7 +91,7 @@ const ComparisonItem = ({ item }: { item: IComparisonItem }) => {
         'comparison',
         setComparisonFromLS,
         setShouldShowEmptyComparison,
-        'Удалено из сравнения!'
+        'deleted'
       )
       return
     }
