@@ -254,21 +254,21 @@ const OrderDelivery = () => {
           <motion.div {...basePropsForMotion}>
             {!shouldShowCourierAddressData && (
               <div className={styles.order__list__item__delivery__courier}>
-              <span>{translations[lang].order.where_deliver_order}</span>
-              <span>{translations[lang].order.enter_address_on_map}</span>
-              <button className='btn-reset' onClick={handleOpenMapModal}>
-                {translations[lang].order.map}
-              </button>
-            </div>
-          )}
-          {shouldShowCourierAddressData &&
-            !!chosenCourierAddressData.address_line1 && (
-              <CourierAddressInfo />
+                <span>{translations[lang].order.where_deliver_order}</span>
+                <span>{translations[lang].order.enter_address_on_map}</span>
+                <button className='btn-reset' onClick={handleOpenMapModal}>
+                  {translations[lang].order.map}
+                </button>
+              </div>
             )}
-        </motion.div>
-      )}
-    </div>
-  </>
+            {shouldShowCourierAddressData &&
+              !!chosenCourierAddressData.address_line1 && (
+                <CourierAddressInfo />
+              )}
+          </motion.div>
+        )}
+      </div>
+    </>
   )
 }
 
