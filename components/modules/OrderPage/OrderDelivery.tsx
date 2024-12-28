@@ -4,7 +4,7 @@
 import { useUnit } from 'effector-react'
 import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState, useCallback} from 'react'
 import { useLang } from '@/hooks/useLang'
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
@@ -97,17 +97,7 @@ const OrderDelivery = () => {
     getUserGeolocation()
   }, [])
 
-  useEffect(() => {
-    if (shouldLoadMap) {
-      addScriptToHead(
-        'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js'
-      )
-      addScriptToHead(
-        'https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js'
-      )
-      handleLoadMap()
-    }
-  }, [shouldLoadMap, handleLoadMap])
+  
 
   const getUserGeolocation = () => {
     const success = async (pos: GeolocationPosition) => {
@@ -135,14 +125,14 @@ const OrderDelivery = () => {
     })
   }
 
-  async function handleLoadMap (
+  const handleLoadMap = async (
     initialSearchValue = '',
     initialPosition = {
       lat: 55.755819,
       lng: 37.617644,
     },
     withMarker = false
-  ){
+  )=>{
     const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
     const map = ttMaps.map({
@@ -200,6 +190,17 @@ const OrderDelivery = () => {
         .zoomTo(10)
     }
   }
+  useEffect(() => {
+    if (shouldLoadMap) {
+      addScriptToHead(
+        'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js'
+      )
+      addScriptToHead(
+        'https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js'
+      )
+      handleLoadMap()
+    }
+  }, [shouldLoadMap, handleLoadMap])
 
   return (
     <>

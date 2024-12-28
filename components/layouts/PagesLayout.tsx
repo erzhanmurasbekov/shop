@@ -13,7 +13,7 @@ import {
   isUserAuth,
   removeOverflowHiddenFromBody,
 } from '@/lib/utils/common'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import CookieAlert from '../modules/CookieAlert/CookieAlert'
 import { $openAuthPopup } from '@/context/auth/state'
@@ -41,11 +41,14 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   const showSizeTable = useUnit($showSizeTable)
   const openAuthPopup = useUnit($openAuthPopup)
   const shareModal = useUnit($shareModal)
-  const protectedRoutes = ['/profile']
+  const protectedRoutes = useMemo(()=>{
+    return ['/profile']
+  },[])
   const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => {
+    const protectedRoutes = ['/profile']
     if (protectedRoutes.includes(pathname)) {
       if (!isUserAuth()) {
         setShouldShowContent(false)
@@ -58,7 +61,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     setShouldShowContent(true)
-  }, [pathname, protectedRoutes, router])
+  }, [pathname, router])
 
   const handleLoadProtectedRoute = async () => {
     const auth = JSON.parse(localStorage.getItem('auth') as string)

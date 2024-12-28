@@ -3,7 +3,13 @@
 import { closeMapModal } from '@/context/modals'
 import { useLang } from '@/hooks/useLang'
 import { removeOverflowHiddenFromBody } from '@/lib/utils/common'
-import { useRef, MutableRefObject, useState, useEffect } from 'react'
+import {
+  useRef,
+  MutableRefObject,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react'
 import styles from '@/styles/order/index.module.scss'
 import { mapOptions } from '@/constants/map'
 import {
@@ -108,19 +114,29 @@ const MapModal = () => {
   }
 
   //@ts-ignore
-  const drawMarkerByClick = async (e) => {
-    const result = await getGeolocationFx({
-      lat: e.lngLat.lat,
-      lon: e.lngLat.lng,
-    })
+  const drawMarkerByClick = useCallback(
+    async (e: any) => {
+      const result = await getGeolocationFx({
+        lat: e.lngLat.lat,
+        lon: e.lngLat.lng,
+      })
 
-    if (result) {
-      removeMapMarkers()
-      drawMarker(e.lngLat.lng, e.lngLat.lat, ttMapInstance)
-      setCourierAddressData(result.data.features[0].properties)
-      setShouldShowCourierAddressData(true)
-    }
-  }
+      if (result) {
+        removeMapMarkers()
+        drawMarker(e.lngLat.lng, e.lngLat.lat, ttMapInstance)
+        setCourierAddressData(result.data.features[0].properties)
+        setShouldShowCourierAddressData(true)
+      }
+    },
+    [
+      getGeolocationFx,
+      ttMapInstance,
+      removeMapMarkers,
+      drawMarker,
+      setCourierAddressData,
+      setShouldShowCourierAddressData,
+    ]
+  )
 
   useEffect(() => {
     if (ttMapInstance?.once) {
@@ -140,7 +156,7 @@ const MapModal = () => {
     }
   }, [handleLoadMap])
 
-  async function handleLoadMap(initialContainer = pickUpMapRef){
+  async function handleLoadMap(initialContainer = pickUpMapRef) {
     const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
     const map = ttMaps.map({

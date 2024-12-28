@@ -170,7 +170,7 @@ const PersonalDataPolicyPage = () => {
               security of personal data;
             </li>
             <li>
-              continuous improvement of the level of knowledge of the Company's
+              continuous improvement of the level of knowledge of the Companys
               employees in the field of ensuring the security of personal data
               during their processing;
             </li>
