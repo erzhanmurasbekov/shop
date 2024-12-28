@@ -195,7 +195,13 @@ const OrderDelivery = () => {
           .zoomTo(10)
       }
     },
-    []
+    [
+      chosenPickupAddressData.bbox,
+      chosenPickupAddressData.lat,
+      chosenPickupAddressData.lon,
+      userGeolocation,
+      handleSelectAddress,
+    ]
   )
   useEffect(() => {
     if (shouldLoadMap) {
