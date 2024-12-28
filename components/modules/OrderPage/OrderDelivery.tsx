@@ -263,8 +263,8 @@ const OrderDelivery = () => {
             )}
             {shouldShowCourierAddressData &&
               !!chosenCourierAddressData.address_line1 && (
-                <CourierAddressInfo />
-              )}
+              <CourierAddressInfo />
+            )}
           </motion.div>
         )}
       </div>
