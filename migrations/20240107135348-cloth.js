@@ -119,7 +119,7 @@ module.exports = {
         return {
           category: 'cloth',
           type,
-          price: +faker.string.numeric(4).replace(/.{0,2}$/, 99),
+          price: +faker.string.numeric(2),
           name: faker.lorem.sentence(2),
           description: faker.lorem.sentences(10),
           characteristics: currentCharacteristics,

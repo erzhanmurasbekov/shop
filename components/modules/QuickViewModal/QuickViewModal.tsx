@@ -97,7 +97,7 @@ const QuickViewModal = () => {
       <div className={styles.modal__right}>
         <h3 className={styles.modal__right__title}>{product.name}</h3>
         <div className={styles.modal__right__price}>
-          {formatPrice(+product.price)} ₽
+          {formatPrice(+product.price)} $
         </div>
         <div className={styles.modal__right__info}>
           <ProductAvailable

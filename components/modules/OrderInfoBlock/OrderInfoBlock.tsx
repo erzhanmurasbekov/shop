@@ -119,13 +119,13 @@ const OrderInfoBlock = ({
           )}{' '}
           {translations[lang].order.worth}{' '}
           <span className={styles.order_block__info__text}>
-            {formatPrice(animatedPrice)} ₽
+            {formatPrice(animatedPrice)} $
           </span>
         </p>
         <p className={styles.order_block__info}>
           {translations[lang].order.amount_with_discounts}:{' '}
           <span className={styles.order_block__info__text}>
-            {priceWithDiscount} ₽
+            {priceWithDiscount} $
           </span>
         </p>
         {isOrderPage && (
@@ -151,7 +151,7 @@ const OrderInfoBlock = ({
         <p className={styles.order_block__total}>
           <span>{translations[lang].order.total}:</span>
           <span className={styles.order_block__total__price}>
-            {priceWithDiscount} ₽
+            {priceWithDiscount} $
           </span>
         </p>
         {isOrderPage ? (

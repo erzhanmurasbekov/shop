@@ -40,7 +40,7 @@ const Breadcrumbs = ({
 
       return [...crumbList]
     },
-    [pathname, getTextGenerator, searchParams, getDefaultTextGenerator, lang]
+    [pathname, getTextGenerator, searchParams, getDefaultTextGenerator]
   )
 
   return (

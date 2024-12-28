@@ -69,7 +69,7 @@ const PriceFilter = ({
           <span>{translations[lang].catalog.from}</span>
           <input
             type='text'
-            placeholder='130 ₽'
+            placeholder='130 $'
             value={priceFrom}
             onChange={onPriceFromChange}
           />
@@ -78,7 +78,7 @@ const PriceFilter = ({
           <span>{translations[lang].catalog.to}</span>
           <input
             type='text'
-            placeholder='6 500 ₽'
+            placeholder='6 500 $'
             value={priceTo}
             onChange={onPriceToChange}
           />

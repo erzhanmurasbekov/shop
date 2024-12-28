@@ -22,10 +22,10 @@ export const usePriceFilter = () => {
     onPriceChange(e.target.value, setPriceTo)
 
   const priceFromInfo = (priceFrom: string) =>
-    `${translations[lang].catalog.from} ${formatPrice(+priceFrom)} ₽`
+    `${translations[lang].catalog.from} ${formatPrice(+priceFrom)} $`
 
   const priceToInfo = (priceTo: string) =>
-    `${translations[lang].catalog.to} ${formatPrice(+priceTo)} ₽`
+    `${translations[lang].catalog.to} ${formatPrice(+priceTo)} $`
 
   useEffect(() => {
     const urlParams = getSearchParamsUrl()

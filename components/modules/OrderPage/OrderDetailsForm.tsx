@@ -160,7 +160,7 @@ const OrderDetailsForm = () => {
       ...orderDetailsValues,
       isValid,
     })
-  }, [isValid])
+  }, [isValid, orderDetailsValues])
 
   return (
     <form className={styles.order__list__item__details__form}>

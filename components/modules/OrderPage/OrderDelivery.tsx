@@ -107,7 +107,7 @@ const OrderDelivery = () => {
       )
       handleLoadMap()
     }
-  }, [shouldLoadMap])
+  }, [shouldLoadMap, handleLoadMap])
 
   const getUserGeolocation = () => {
     const success = async (pos: GeolocationPosition) => {
@@ -135,14 +135,14 @@ const OrderDelivery = () => {
     })
   }
 
-  const handleLoadMap = async (
+  async function handleLoadMap (
     initialSearchValue = '',
     initialPosition = {
       lat: 55.755819,
       lng: 37.617644,
     },
     withMarker = false
-  ) => {
+  ){
     const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
     const map = ttMaps.map({

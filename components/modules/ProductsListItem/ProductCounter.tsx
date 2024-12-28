@@ -39,7 +39,7 @@ const ProductCounter = ({
 
   useEffect(() => {
     setCount(currentInitialCount as number)
-  }, [currentInitialCount])
+  }, [currentInitialCount, setCount])
 
   const updateCountWithRequest = (count: number) => {
     updateCartItemCountInLS(cartItem.clientId, count)

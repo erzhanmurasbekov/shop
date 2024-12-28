@@ -107,7 +107,7 @@ export default function Favorites() {
                       ${formatPrice(+(paymentData.amount?.value || 0)).replace(
           /\s/g,
           '\u00A0'
-        )}\u00A0₽
+        )}\u00A0$
                     </span>`
                         )}`,
                   }}

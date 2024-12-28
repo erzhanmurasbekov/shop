@@ -43,7 +43,7 @@ const OrderCartItem = ({ item, position }: IOrderCartItemProps) => {
             </span>
             <span className={styles.order__list__item__list__item__info}>
               <span>{translations[lang].order.sum}: </span>
-              {formatPrice(+item.price * +item.count)} ₽
+              {formatPrice(+item.price * +item.count)} $
             </span>
           </div>
         </li>
@@ -70,7 +70,7 @@ const OrderCartItem = ({ item, position }: IOrderCartItemProps) => {
             <span>{item.count} шт.</span>
           </td>
           <td className={styles.order__list__item__table__block}>
-            <span>{formatPrice(+item.price * +item.count)} ₽</span>
+            <span>{formatPrice(+item.price * +item.count)} $</span>
           </td>
         </tr>
       )}

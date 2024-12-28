@@ -58,7 +58,7 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     setShouldShowContent(true)
-  }, [pathname])
+  }, [pathname, protectedRoutes, router])
 
   const handleLoadProtectedRoute = async () => {
     const auth = JSON.parse(localStorage.getItem('auth') as string)

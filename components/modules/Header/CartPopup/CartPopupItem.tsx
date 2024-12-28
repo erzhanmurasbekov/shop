@@ -48,7 +48,7 @@ const CartPopupItem = ({ item }: { item: ICartItem }) => {
             updateCountAsync
           />
           <span className='cart-list__item__price'>
-            {formatPrice(animatedPrice)} ₽
+            {formatPrice(animatedPrice)} $
           </span>
         </div>
       </div>

@@ -99,7 +99,7 @@ const ProductPageContent = () => {
           <h1 className={styles.product__top__title}>{product.name}</h1>
           <div className={styles.product__top__price}>
             <h3 className={styles.product__top__price__title}>
-              {formatPrice(product.price)} ₽
+              {formatPrice(product.price)} $
             </h3>
             <div className={styles.product__top__price__inner}>
               <div className={styles.product__top__price__favorite}>

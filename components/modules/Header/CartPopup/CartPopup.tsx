@@ -83,7 +83,7 @@ const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
               <div className='cart-popup__footer'>
                 <div className='cart-popup__footer__inner'>
                   <span>{translations[lang].common.order_price}:</span>
-                  <span>{formatPrice(animatedPrice)} ₽</span>
+                  <span>{formatPrice(animatedPrice)} $</span>
                 </div>
                 <Link href='/order' className='cart-popup__footer__link'>
                   {translations[lang].breadcrumbs.order}

@@ -27,7 +27,7 @@ const ProductsByCollection = ({ collection }: { collection: string }) => {
         ],
       additionalParam: `collection=${collection}`,
     })
-  }, [])
+  }, [collection])
 
   if (!products.items?.length) {
     return null

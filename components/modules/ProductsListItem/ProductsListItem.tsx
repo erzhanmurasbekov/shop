@@ -90,7 +90,7 @@ const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
                   ]
                 }
               </span>
-              <span>{formatPrice(+item.price)} ₽</span>
+              <span>{formatPrice(+item.price)} $</span>
             </p>
           </Link>
         </li>
@@ -163,7 +163,7 @@ const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
               inStock={+item.inStock}
             />
             <span className={styles.list__item__price}>
-              {formatPrice(+item.price)} ₽
+              {formatPrice(+item.price)} $
             </span>
           </div>
           {productsWithoutSizes.includes(item.type) ? (

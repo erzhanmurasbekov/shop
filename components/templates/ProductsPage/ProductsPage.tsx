@@ -144,7 +144,7 @@ const ProductsPage = ({ searchParams, pageName }: IProductsPage) => {
       default:
         break
     }
-  }, [lang])
+  }, [lang, handleApplyFiltersWithCategory, pageName, translations])
 
   return (
     <>

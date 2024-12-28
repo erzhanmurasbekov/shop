@@ -25,7 +25,7 @@ const ProductPage = ({ productId, category }: IProductPageProps) => {
       productId,
       category,
     })
-  }, [])
+  }, [category, productId])
 
   useEffect(() => {
     if (breadcrumbs) {

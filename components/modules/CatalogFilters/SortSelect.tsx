@@ -31,7 +31,7 @@ const SortSelect = ({
         handleApplyFiltersBySort(sizesParam)
       }
     }
-  }, [lang])
+  }, [lang, handleApplyFiltersBySort, translations])
 
   const sortOptions = [
     {

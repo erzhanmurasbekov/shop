@@ -8,7 +8,6 @@ import NewGoods from '@/components/modules/MainPage/NewGoods'
 import BrandLife from '@/components/modules/MainPage/BrandLife'
 import { usePageTitle } from '@/hooks/usePageTitle'
 
-
 const MainPage = () => {
   useGate(MainPageGate)
   usePageTitle('main')

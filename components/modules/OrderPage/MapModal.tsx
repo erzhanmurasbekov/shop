@@ -131,16 +131,16 @@ const MapModal = () => {
 
       ttMapInstance.on('click', drawMarkerByClick)
     }
-  }, [courierTab, pickupTab, ttMapInstance])
+  }, [courierTab, pickupTab, ttMapInstance, drawMarkerByClick])
 
   useEffect(() => {
     if (shouldLoadMap.current) {
       shouldLoadMap.current = false
       handleLoadMap()
     }
-  }, [])
+  }, [handleLoadMap])
 
-  const handleLoadMap = async (initialContainer = pickUpMapRef) => {
+  async function handleLoadMap(initialContainer = pickUpMapRef){
     const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
     const map = ttMaps.map({

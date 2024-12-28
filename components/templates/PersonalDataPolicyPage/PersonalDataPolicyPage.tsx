@@ -145,29 +145,40 @@ const PersonalDataPolicyPage = () => {
             3.1. Обработка персональных данных в Компании основана на следующих
             принципах:
           </p>
-            <ul>
+          <ul>
             <li>
-              legality of the purposes and methods of processing personal data and good faith;
+              legality of the purposes and methods of processing personal data
+              and good faith;
             </li>
             <li>
-              compliance of the purposes of processing personal data with the purposes predetermined and declared during the collection of personal data, as well as the authority of the Company;
+              compliance of the purposes of processing personal data with the
+              purposes predetermined and declared during the collection of
+              personal data, as well as the authority of the Company;
             </li>
             <li>
-              compliance of the volume and nature of the processed personal data, methods of processing personal data with the purposes of processing personal data;
+              compliance of the volume and nature of the processed personal
+              data, methods of processing personal data with the purposes of
+              processing personal data;
             </li>
             <li>
-              accuracy of personal data, their relevance and sufficiency for the purposes of processing, inadmissibility of processing excessive personal data in relation to the purposes of collection;
+              accuracy of personal data, their relevance and sufficiency for the
+              purposes of processing, inadmissibility of processing excessive
+              personal data in relation to the purposes of collection;
             </li>
             <li>
-              legitimacy of organizational and technical measures to ensure the security of personal data;
+              legitimacy of organizational and technical measures to ensure the
+              security of personal data;
             </li>
             <li>
-              continuous improvement of the level of knowledge of the Company's employees in the field of ensuring the security of personal data during their processing;
+              continuous improvement of the level of knowledge of the Company's
+              employees in the field of ensuring the security of personal data
+              during their processing;
             </li>
             <li>
-              striving for continuous improvement of the personal data protection system.
+              striving for continuous improvement of the personal data
+              protection system.
             </li>
-            </ul>
+          </ul>
           <p>&nbsp;</p>
           <p>
             <strong>4. ЦЕЛИ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</strong>
