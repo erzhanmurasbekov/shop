@@ -263,7 +263,7 @@ const OrderDelivery = () => {
             )}
             {shouldShowCourierAddressData &&
               !!chosenCourierAddressData.address_line1 && (
-                //eslint-disable-next-line
+            //eslint-disable-next-line
                 <CourierAddressInfo />
             )}
           </motion.div>
