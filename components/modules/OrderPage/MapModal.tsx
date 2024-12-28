@@ -129,12 +129,9 @@ const MapModal = () => {
       }
     },
     [
-      getGeolocationFx,
       ttMapInstance,
       removeMapMarkers,
       drawMarker,
-      setCourierAddressData,
-      setShouldShowCourierAddressData,
     ]
   )
 
@@ -149,14 +146,9 @@ const MapModal = () => {
     }
   }, [courierTab, pickupTab, ttMapInstance, drawMarkerByClick])
 
-  useEffect(() => {
-    if (shouldLoadMap.current) {
-      shouldLoadMap.current = false
-      handleLoadMap()
-    }
-  }, [handleLoadMap])
+  
 
-  async function handleLoadMap(initialContainer = pickUpMapRef) {
+  const handleLoadMap = useCallback(async(initialContainer = pickUpMapRef) =>{
     const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
     const map = ttMaps.map({
@@ -262,7 +254,13 @@ const MapModal = () => {
     }
 
     return map
-  }
+  },[chosenPickupAddressData,mapInstance,pickUpMapRef,rostelecomDataByCity,userGeolocation])
+  useEffect(() => {
+    if (shouldLoadMap.current) {
+      shouldLoadMap.current = false
+      handleLoadMap()
+    }
+  }, [handleLoadMap])
 
   const handleSelectAddressByMarkers = (
     {

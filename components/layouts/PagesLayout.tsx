@@ -41,9 +41,6 @@ const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   const showSizeTable = useUnit($showSizeTable)
   const openAuthPopup = useUnit($openAuthPopup)
   const shareModal = useUnit($shareModal)
-  const protectedRoutes = useMemo(()=>{
-    return ['/profile']
-  },[])
   const pathname = usePathname()
   const router = useRouter()
 

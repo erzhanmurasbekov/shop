@@ -125,7 +125,7 @@ const OrderDelivery = () => {
     })
   }
 
-  const handleLoadMap = async (
+  const handleLoadMap = useCallback(async (
     initialSearchValue = '',
     initialPosition = {
       lat: 55.755819,
@@ -189,7 +189,7 @@ const OrderDelivery = () => {
         ])
         .zoomTo(10)
     }
-  }
+  },[])
   useEffect(() => {
     if (shouldLoadMap) {
       addScriptToHead(
