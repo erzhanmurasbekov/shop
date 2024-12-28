@@ -263,7 +263,6 @@ const OrderDelivery = () => {
             )}
             {shouldShowCourierAddressData &&
               !!chosenCourierAddressData.address_line1 && (
-                // eslint-disable-next-line indent
                 <CourierAddressInfo />
               )}
           </motion.div>
