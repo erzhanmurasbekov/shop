@@ -4,7 +4,13 @@
 import { useUnit } from 'effector-react'
 import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
-import { MutableRefObject, useEffect, useRef, useState, useCallback} from 'react'
+import {
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react'
 import { useLang } from '@/hooks/useLang'
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
@@ -97,8 +103,6 @@ const OrderDelivery = () => {
     getUserGeolocation()
   }, [])
 
-  
-
   const getUserGeolocation = () => {
     const success = async (pos: GeolocationPosition) => {
       const { latitude, longitude } = pos.coords
@@ -125,71 +129,74 @@ const OrderDelivery = () => {
     })
   }
 
-  const handleLoadMap = useCallback(async (
-    initialSearchValue = '',
-    initialPosition = {
-      lat: 55.755819,
-      lng: 37.617644,
-    },
-    withMarker = false
-  )=>{
-    const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
+  const handleLoadMap = useCallback(
+    async (
+      initialSearchValue = '',
+      initialPosition = {
+        lat: 55.755819,
+        lng: 37.617644,
+      },
+      withMarker = false
+    ) => {
+      const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
-    const map = ttMaps.map({
-      key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY as string,
-      container: mapRef.current,
-      center: initialPosition,
-      zoom: 10,
-    })
+      const map = ttMaps.map({
+        key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY as string,
+        container: mapRef.current,
+        center: initialPosition,
+        zoom: 10,
+      })
 
-    setMapInstance(map)
-    withMarker &&
-      handleSelectAddress(
-        chosenPickupAddressData.bbox as IAddressBBox,
-        {
-          lat: chosenPickupAddressData.lat as number,
-          lon: chosenPickupAddressData.lon as number,
-        },
-        map
+      setMapInstance(map)
+      withMarker &&
+        handleSelectAddress(
+          chosenPickupAddressData.bbox as IAddressBBox,
+          {
+            lat: chosenPickupAddressData.lat as number,
+            lon: chosenPickupAddressData.lon as number,
+          },
+          map
+        )
+
+      initSearchMarker(ttMaps)
+
+      //@ts-ignore
+      const ttSearchBox = new tt.plugins.SearchBox(tt.services, mapOptions)
+
+      const searchBoxHTML = ttSearchBox.getSearchBoxHTML()
+      searchBoxHTML.classList.add('delivery-search-input')
+      labelRef.current.append(searchBoxHTML)
+
+      initialSearchValue && ttSearchBox.setValue(initialSearchValue)
+
+      //@ts-ignore
+      const searchMarkersManager = new SearchMarkersManager(map)
+      //@ts-ignore
+      ttSearchBox.on('tomtom.searchbox.resultsfound', (e) =>
+        handleResultsFound(e, searchMarkersManager, map)
+      )
+      //@ts-ignore
+      ttSearchBox.on('tomtom.searchbox.resultselected', (e) =>
+        handleResultSelection(e, searchMarkersManager, map)
+      )
+      ttSearchBox.on('tomtom.searchbox.resultscleared', () =>
+        handleResultClearing(searchMarkersManager, map, userGeolocation)
       )
 
-    initSearchMarker(ttMaps)
+      if (userGeolocation?.features && !withMarker) {
+        ttSearchBox.setValue(userGeolocation?.features[0].properties.city)
+        handleSelectPickupAddress(userGeolocation?.features[0].properties.city)
 
-    //@ts-ignore
-    const ttSearchBox = new tt.plugins.SearchBox(tt.services, mapOptions)
-
-    const searchBoxHTML = ttSearchBox.getSearchBoxHTML()
-    searchBoxHTML.classList.add('delivery-search-input')
-    labelRef.current.append(searchBoxHTML)
-
-    initialSearchValue && ttSearchBox.setValue(initialSearchValue)
-
-    //@ts-ignore
-    const searchMarkersManager = new SearchMarkersManager(map)
-    //@ts-ignore
-    ttSearchBox.on('tomtom.searchbox.resultsfound', (e) =>
-      handleResultsFound(e, searchMarkersManager, map)
-    )
-    //@ts-ignore
-    ttSearchBox.on('tomtom.searchbox.resultselected', (e) =>
-      handleResultSelection(e, searchMarkersManager, map)
-    )
-    ttSearchBox.on('tomtom.searchbox.resultscleared', () =>
-      handleResultClearing(searchMarkersManager, map, userGeolocation)
-    )
-
-    if (userGeolocation?.features && !withMarker) {
-      ttSearchBox.setValue(userGeolocation?.features[0].properties.city)
-      handleSelectPickupAddress(userGeolocation?.features[0].properties.city)
-
-      map
-        .setCenter([
-          userGeolocation?.features[0].properties.lon,
-          userGeolocation?.features[0].properties.lat,
-        ])
-        .zoomTo(10)
-    }
-  },[])
+        map
+          .setCenter([
+            userGeolocation?.features[0].properties.lon,
+            userGeolocation?.features[0].properties.lat,
+          ])
+          .zoomTo(10)
+      }
+    },
+    []
+  )
   useEffect(() => {
     if (shouldLoadMap) {
       addScriptToHead(
@@ -250,9 +257,9 @@ const OrderDelivery = () => {
             )}
             {shouldShowCourierAddressData &&
               !!chosenCourierAddressData.address_line1 && (
-            // eslint-disable-next-line indent
+                // eslint-disable-next-line indent
                 <CourierAddressInfo />
-            )}
+              )}
           </motion.div>
         )}
       </div>

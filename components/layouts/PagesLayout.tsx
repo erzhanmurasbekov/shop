@@ -13,7 +13,7 @@ import {
   isUserAuth,
   removeOverflowHiddenFromBody,
 } from '@/lib/utils/common'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import CookieAlert from '../modules/CookieAlert/CookieAlert'
 import { $openAuthPopup } from '@/context/auth/state'

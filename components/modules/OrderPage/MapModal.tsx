@@ -60,19 +60,19 @@ const MapModal = () => {
   const courierAddressData = useUnit($courierAddressData)
   const isMedia940 = useMediaQuery(940)
 
-  const removeMapMarkers = () => {
+  const removeMapMarkers = useCallback(() => {
     const markers = document.querySelectorAll('.modal-map-marker')
     markers.forEach((marker) => marker.remove())
-  }
+  }, [])
 
-  const drawMarker = async (lon: number, lat: number, map: any) => {
+  const drawMarker = useCallback(async (lon: number, lat: number, map: any) => {
     const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
     const element = document.createElement('div')
     element.classList.add('modal-map-marker')
 
     new ttMaps.Marker({ element }).setLngLat([lon, lat]).addTo(map)
-  }
+  }, [])
 
   const handleCloseModal = () => {
     closeMapModal()
@@ -128,11 +128,7 @@ const MapModal = () => {
         setShouldShowCourierAddressData(true)
       }
     },
-    [
-      ttMapInstance,
-      removeMapMarkers,
-      drawMarker,
-    ]
+    [ttMapInstance, removeMapMarkers, drawMarker]
   )
 
   useEffect(() => {
@@ -146,115 +142,122 @@ const MapModal = () => {
     }
   }, [courierTab, pickupTab, ttMapInstance, drawMarkerByClick])
 
-  
+  const handleLoadMap = useCallback(
+    async (initialContainer = pickUpMapRef) => {
+      const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
-  const handleLoadMap = useCallback(async(initialContainer = pickUpMapRef) =>{
-    const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
-
-    const map = ttMaps.map({
-      key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY as string,
-      container: initialContainer.current,
-      center: {
-        lat: 55.755819,
-        lng: 37.617644,
-      },
-      zoom: 10,
-    })
-
-    setTtMapInstance(map)
-
-    //@ts-ignore
-    const ttSearchBox = new tt.plugins.SearchBox(tt.services, mapOptions)
-
-    const searchBoxHTML = ttSearchBox.getSearchBoxHTML()
-    searchBoxHTML.classList.add('modal-search-input')
-    initialContainer.current.append(searchBoxHTML)
-
-    //@ts-ignore
-    const searchMarkersManager = new SearchMarkersManager(map)
-
-    const nav = new ttMaps.NavigationControl({})
-    map.addControl(nav, 'bottom-right')
-    map.addControl(
-      new ttMaps.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
+      const map = ttMaps.map({
+        key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY as string,
+        container: initialContainer.current,
+        center: {
+          lat: 55.755819,
+          lng: 37.617644,
         },
-        trackUserLocation: true,
-      }),
-      'bottom-left'
-    )
-
-    const setMarkersByLocationsData = (data: IRostelecomAddressData[]) => {
-      data.forEach((item) => {
-        const sw = new ttMaps.LngLat(item.bbox.lon1, item.bbox.lat1)
-        const ne = new ttMaps.LngLat(item.bbox.lon2, item.bbox.lat2)
-        const bounds = new ttMaps.LngLatBounds(sw, ne)
-
-        map.fitBounds(bounds, { padding: 130, linear: true })
-
-        const element = document.createElement('div')
-        element.classList.add('modal-map-marker')
-
-        new ttMaps.Marker({ element })
-          .setLngLat([item.lon, item.lat])
-          .addTo(map.zoomTo(12))
+        zoom: 10,
       })
-    }
 
-    //@ts-ignore
-    ttSearchBox.on('tomtom.searchbox.resultselected', async (e) => {
-      const data = await handleSelectPickupAddress(e.data.text)
+      setTtMapInstance(map)
 
-      handleResultSelection(e, searchMarkersManager, map)
-      setMarkersByLocationsData(data)
-    })
+      //@ts-ignore
+      const ttSearchBox = new tt.plugins.SearchBox(tt.services, mapOptions)
 
-    ttSearchBox.on('tomtom.searchbox.resultscleared', () => {
-      handleResultClearing(searchMarkersManager, map, userGeolocation)
-      handleResultClearing(searchMarkersManager, mapInstance, userGeolocation)
-    })
+      const searchBoxHTML = ttSearchBox.getSearchBoxHTML()
+      searchBoxHTML.classList.add('modal-search-input')
+      initialContainer.current.append(searchBoxHTML)
 
-    //@ts-ignore
-    ttSearchBox.on('tomtom.searchbox.resultsfound', (e) =>
-      handleResultsFound(e, searchMarkersManager, map)
-    )
+      //@ts-ignore
+      const searchMarkersManager = new SearchMarkersManager(map)
 
-    if (!!chosenPickupAddressData.address_line1) {
-      const chosenItem = rostelecomDataByCity.filter(
-        (item) => item.address_line2 === chosenPickupAddressData.address_line2
-      )[0]
+      const nav = new ttMaps.NavigationControl({})
+      map.addControl(nav, 'bottom-right')
+      map.addControl(
+        new ttMaps.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true,
+          },
+          trackUserLocation: true,
+        }),
+        'bottom-left'
+      )
 
-      setShouldLoadRostelecomData(false)
-      setMarkersByLocationsData([chosenItem])
+      const setMarkersByLocationsData = (data: IRostelecomAddressData[]) => {
+        data.forEach((item) => {
+          const sw = new ttMaps.LngLat(item.bbox.lon1, item.bbox.lat1)
+          const ne = new ttMaps.LngLat(item.bbox.lon2, item.bbox.lat2)
+          const bounds = new ttMaps.LngLatBounds(sw, ne)
 
-      map.setCenter([chosenItem.lon, chosenItem.lat]).zoomTo(12)
-      ttSearchBox.setValue(chosenItem.city)
+          map.fitBounds(bounds, { padding: 130, linear: true })
 
-      return
-    }
+          const element = document.createElement('div')
+          element.classList.add('modal-map-marker')
 
-    if (!userGeolocation.features) {
-      const data = await handleSelectPickupAddress('москва')
+          new ttMaps.Marker({ element })
+            .setLngLat([item.lon, item.lat])
+            .addTo(map.zoomTo(12))
+        })
+      }
 
-      setMarkersByLocationsData(data)
-      ttSearchBox.setValue('москва')
-    } else {
-      map
-        .setCenter([
-          userGeolocation?.features[0].properties.lon,
-          userGeolocation?.features[0].properties.lat,
-        ])
-        .zoomTo(12)
-      ttSearchBox.setValue(userGeolocation?.features[0].properties.city)
-    }
+      //@ts-ignore
+      ttSearchBox.on('tomtom.searchbox.resultselected', async (e) => {
+        const data = await handleSelectPickupAddress(e.data.text)
 
-    if (rostelecomDataByCity.length) {
-      setMarkersByLocationsData(rostelecomDataByCity)
-    }
+        handleResultSelection(e, searchMarkersManager, map)
+        setMarkersByLocationsData(data)
+      })
 
-    return map
-  },[chosenPickupAddressData,mapInstance,pickUpMapRef,rostelecomDataByCity,userGeolocation])
+      ttSearchBox.on('tomtom.searchbox.resultscleared', () => {
+        handleResultClearing(searchMarkersManager, map, userGeolocation)
+        handleResultClearing(searchMarkersManager, mapInstance, userGeolocation)
+      })
+
+      //@ts-ignore
+      ttSearchBox.on('tomtom.searchbox.resultsfound', (e) =>
+        handleResultsFound(e, searchMarkersManager, map)
+      )
+
+      if (!!chosenPickupAddressData.address_line1) {
+        const chosenItem = rostelecomDataByCity.filter(
+          (item) => item.address_line2 === chosenPickupAddressData.address_line2
+        )[0]
+
+        setShouldLoadRostelecomData(false)
+        setMarkersByLocationsData([chosenItem])
+
+        map.setCenter([chosenItem.lon, chosenItem.lat]).zoomTo(12)
+        ttSearchBox.setValue(chosenItem.city)
+
+        return
+      }
+
+      if (!userGeolocation.features) {
+        const data = await handleSelectPickupAddress('москва')
+
+        setMarkersByLocationsData(data)
+        ttSearchBox.setValue('москва')
+      } else {
+        map
+          .setCenter([
+            userGeolocation?.features[0].properties.lon,
+            userGeolocation?.features[0].properties.lat,
+          ])
+          .zoomTo(12)
+        ttSearchBox.setValue(userGeolocation?.features[0].properties.city)
+      }
+
+      if (rostelecomDataByCity.length) {
+        setMarkersByLocationsData(rostelecomDataByCity)
+      }
+
+      return map
+    },
+    [
+      chosenPickupAddressData,
+      mapInstance,
+      pickUpMapRef,
+      rostelecomDataByCity,
+      userGeolocation,
+    ]
+  )
   useEffect(() => {
     if (shouldLoadMap.current) {
       shouldLoadMap.current = false
